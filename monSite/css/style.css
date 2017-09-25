@@ -1,0 +1,35 @@
+body {
+
+	margin:0;
+}
+
+#body h1{
+	margin-left:42%;
+
+}
+#ac h2{
+	background-color: rgba(0, 227, 255, 0.22);
+	background: linear-gradient(to right, rgba(0, 227, 255, 0.07), white);
+}
+#ac input{
+	width: 300px;
+
+}
+#ac button{
+	margin-top:-56px;
+	margin-left: 302px;
+}
+
+.container{
+	background-color: #FFFFFF;
+	box-shadow: 1px 1px 10px #b2b1b1;
+	margin-bottom: 20px ;
+}
+#ca input{
+	width: 300px;
+
+}
+#ca button{
+	margin-top:-56px;
+	margin-left: 302px;
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+	<script src="angular.min.js"></script>
+</head>
+<body ng-app="filterOrderByApp">
+
+	<div ng-controller="monCtrl">
+		Trier par : <select name="" id="" ng-model="trierPar">
+			<option value="nom">Nom</option>
+			<option value="prenom">Prénom</option>
+			<option value="age">Age</option>
+		</select>
+		Par ordre :
+		<select name="" id="" ng-model="reverse">
+			<option value="true">Croissant</option>
+			<option value="false">Décroissant</option>
+		</select>
+		<table>
+			<thead>
+				<tr>
+					<td><button ng-click="changeOrderBy('nom')">Nom</button> <br>
+						<input type="text" ng-model="search.nom">
+					</td>
+					<td><button ng-click="changeOrderBy('prenom')">Prénom</button><br>
+						<input type="text" ng-model="search.prenom"></td>
+					<td><button ng-click="changeOrderBy('age')">Age</button><br>
+						<input type="text" ng-model="search.age"></td>
+					<td></td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="client in listeClient | filter:search | orderBy:trierPar:reverse">
+					<td>{{client.nom}}</td>
+					<td>{{client.prenom}}</td>
+					<td>{{client.age}}</td>
+					<td><button ng-click="supprimeClient(client)">Supprimer</button></td>
+				</tr>
+			</tbody>
+		</table>
+		<br>
+		<input type="text" ng-model="newClient.nom">
+		<input type="text" ng-model="newClient.prenom">
+		<input type="text" ng-model="newClient.age">
+		<button ng-click="ajouterClient()">Ajouter</button>
+	</div>
+	<script>
+		var app = angular.module('filterOrderByApp', []);
+
+		app.controller('monCtrl', function($scope){
+			$scope.reverse = false;
+			$scope.search = {nom: '', prenom:'', age:''};
+			$scope.listeClient = [
+				{nom: 'Dupont', prenom: 'Toto', age: 33},
+
+				{nom: 'Zitte', prenom: 'Bidule', age: 8},
+
+				{nom: 'Machin', prenom: 'Truc', age: 120}
+			];
+
+			$scope.changeOrderBy = function(paramTrierPar){
+				$scope.trierPar = paramTrierPar;
+				if($scope.trierPar == paramTrierPar){
+					$scope.reverse = !$scope.reverse;
+				}
+			}
+
+			$scope.newClient = {}
+			$scope.ajouterClient = function(){
+				$scope.newClient.age = parseInt($scope.newClient.age);
+				$scope.listeClient.push($scope.newClient);
+				$scope.newClient = {};
+			}
+
+			$scope.supprimeClient = function(client){
+				console.log('client : ', client);
+				// je récupère l'index du client dans le tableau listeClient
+				var indexToDelete = $scope.listeClient.indexOf(client);
+				console.log('indexToDelete', indexToDelete);
+				// je supprime un seul élément à partir de l'indexToDelete
+				$scope.listeClient.splice(indexToDelete, 1);
+			};
+		});
+	</script>
+</body>
+</html>

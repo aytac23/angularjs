@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Filtre CTRL F</title>
+	<link rel="stylesheet" href="master.css">
+	<script src="angular.min.js"></script>
+</head>
+<body ng-app="monApp">
+	
+	<div ng-controller="monCtrl">
+		<input type="text" ng-model="textToHighlight"><br>
+		<span ng-bind-html="texte | ctrlf:textToHighlight"></span>
+		<hr>
+		{{monAutreTxt | ctrlf}}
+	</div>
+	<script>
+		var app = angular.module('monApp', []);
+		app.controller('monCtrl', function($scope){
+			$scope.texte = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus, harum doloribus labore consequuntur accusamus blanditiis, reprehenderit repudiandae illo natus modi ducimus nobis laudantium illum facilis quam praesentium! Quia, explicabo, iure. Lorem";
+
+			$scope.monAutreTxt = "Lorem";
+		})
+		app.filter('ctrlf', function($sce){
+			return function(input, textToHighlight){
+				console.log(textToHighlight)
+				// je vérifie que textToHighlight n'est pas undefined (sinon, il me remplace tous les intercarctères par mon motif choisi), de même pour textToHighLight étant une chaine de caractère vide
+				if(typeof textToHighlight != 'undefined' && textToHighlight != ''){
+					// Je crée une expression régulière avec un flag global (pour chercher toutes les occurences et pas une seule)
+					var regexp = new RegExp(textToHighlight, 'g');
+
+					// je remplace mon expression régulière et j'écrase input avec cette nouvelle chaîne de caractère
+					input = input.replace(regexp, '<span class="highlight">'+textToHighlight+'</span>');
+				}
+				return $sce.trustAsHtml(input);
+			}
+		});
+	</script>	
+</body>
+</html>

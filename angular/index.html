@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+	<script src="angular.min.js"></script>
+	<link rel="stylesheet" href="master.css">
+</head>
+<body ng-app="monApp">
+	<div ng-controller="monCtrl">
+		<h1>Liste de tâches</h1>
+
+		<ul>
+			<li ng-repeat="tache in listeTaches track by $index">
+				<input type="checkbox" ng-model="tache.estFinie">
+				<span ng-class="{estFinie: tache.estFinie}">{{tache.titre}}</span>
+			</li>
+		</ul>
+		<input type="text" ng-model="tache"> <button ng-click="ajouteTache()">Ajouter la tâche</button>
+	</div>
+
+<script>
+
+	var app = angular.module('monApp', []);
+
+	app.controller('monCtrl', ['$scope', function($scope){
+		console.log('Mon controlleur vient de s\'executer !');
+
+		// initialise ma liste de tâche qui sera visible dès le rafraichissement
+		$scope.listeTaches = [
+			{titre: 'Finir l\'application Taches', estFinie : false},
+			{titre: 'Partir en vacances', estFinie : true}
+		];
+
+		$scope.ajouteTache = function(){
+			$scope.listeTaches.push({
+				titre: $scope.tache,
+				estFinie: false
+			});
+
+			$scope.tache = "";
+		}
+	}]);
+</script>
+</body>
+</html>

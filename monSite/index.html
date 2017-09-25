@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Document</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="js/angular.min.js"></script>
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/mein.js"></script>
+
+</head>
+    <body  ng-app="myApp">
+        <div class="container" >
+            <div  ng-controller="monTableau">
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <nav class="navbar navbar-inverse">
+                        <div class="container-fluid">
+                            <ul class="nav navbar-nav">
+                                <li class="active"> <a href="#">Accueil</a> </li>
+                                <li> <a href="#">Liens</a> </li>
+                                <li> <a href="#">Tutos</a> </li>
+                                <li> <a href="#">Références</a> </li>
+                            </ul>
+                            <form class="navbar-form navbar-right inline-form">
+                                <div class="form-group">
+                                    <input type="search" class="input-sm form-control" placeholder="Recherche">
+                                    <button type="submit" class="btn btn-primary btn-sm">Chercher</button>
+                                </div>
+                            </form>
+                        </div>
+                     </nav>
+
+                </div>
+            </div>
+
+
+            <section id="body">
+
+                <div class="row" ng-submit="addNew()">
+                    <div class="col-md-12">
+                        <h1>Mon blog</h1>
+
+                        <div id="ac" class="col-md-6">
+                            <h2>Mon activitée</h2>
+                            <ul>
+
+                                <li>Course</li>
+                                <input type="text"class="input-md form-control" ng-model="Aajouter">
+                                <button type="button" class="btn btn-primary" ng-click="ajouter()">Ajouter</button>
+
+                                <li>Marche a pied</li>
+                                <input type="text"class="input-md form-control">
+                                <button type="button" class="btn btn-primary">Ajouter</button>
+
+                                <li>Vélo</li><input type="text"class="input-md form-control">
+                                <button type="button" class="btn btn-primary">Ajouter</button>
+
+                                <li>Autre</li><input type="text"class="input-md form-control">
+                                <button type="button" class="btn btn-primary">Ajouter</button>
+                            </ul>
+                        </div>
+
+                        <div id="ca" class="col-md-6" class="search">
+                            <h2>Mes calories</h2>
+                            <ul>
+                                <li>Petit dejeuné</li>
+                                <input type="text"class="input-md form-control" ng-model="saisie.pdej">
+                                <button type="button" class="btn btn-primary">Ajouter</button>
+
+                                <li>dejeuné</li><input type="text"class="input-md form-control"ng-model="saisie.dej">
+                                <button type="button" class="btn btn-primary">Ajouter</button>
+
+                                <li>Repas</li><input type="text"class="input-md form-control"ng-model="saisie.repas">
+                                <button type="button" class="btn btn-primary">Ajouter</button>
+
+                                <li>Extra</li><input type="text"class="input-md form-control"ng-model="saisie.extra">
+                                <button type="button" class="btn btn-primary">Ajouter</button>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+
+                        <div class="col-md-6">
+                            <table class="table"  >
+                                <h1>Activiter</h1>
+                                <tr>
+                                    <th>id</th>
+                                    <th>Km courus</th>
+                                    <th>Km marchés</th>
+                                    <th>km à vélo</th>
+                                    <th>Autres</th>
+                                </tr>
+
+
+                                <tr ng-repeat="x in xs" | filter="saisie">
+                                    <td>{{ x.id }}</td>
+                                    <td>{{ x.course }}</td>
+                                    <td>{{ x.marche }}</td>
+                                    <td>{{ x.velo }}</td>
+                                    <td>{{ x.autre }}</td>
+
+                                </tr>
+                            </table>
+                        </div>
+
+                    <div class="col-md-6">
+                        <table class="table">
+                            <h1>Manger</h1>
+                                <tr>
+                                    <th>id</th>
+                                    <th>Petit dej</th>
+                                    <th>dej</th>
+                                    <th>Repas</th>
+                                    <th>Extra kilo</th>
+                                </tr>
+                            <tr ng-repeat="x in xs" | filter="search">
+                                <td>{{id}}</td>
+                                <td>{{ saisie.pdej}}</td>
+                                <td>{{ saisie.dej}}</td>
+                                <td>{{ saisie.repas }}</td>
+                                <td>{{ saisie.extra }}</td>
+                            </tr>
+                         </table>
+                    </div>
+
+                </div>
+
+
+            </section>
+
+          </div>
+        </div>
+    </body>
+</html>

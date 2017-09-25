@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Ma super ToDoList</title>
+
+	<link rel="stylesheet" href="master.css">
+	<script src="angular.min.js"></script>
+</head>
+<body ng-app="maSuperToDoListApp">
+	<div ng-controller="toDoCtrl">
+		{{countRemainingTask()}} restantes sur {{listeTaches.length}} au total
+		<ul>
+			<li ng-repeat="tache in listeTaches"><input type="checkbox" ng-model="tache.etat">
+				<span ng-class="{estFinie:tache.etat}">{{tache.titre}}</span>
+			</li>
+		</ul>
+		<input type="text" ng-model="tacheAAjouter"> <button ng-click="ajouterTache()">Ajouter tâche</button><button ng-click="removeDone()">Archiver</button>
+	</div>
+	<script>
+	var app = angular.module('maSuperToDoListApp', []);
+
+	app.controller('toDoCtrl', function($scope){
+		$scope.listeTaches = [
+			{titre: 'Première tâche', etat: false},
+			{titre: 'ma deuxième tâche', etat: true},
+
+			{titre: 'ma deuxième tâche', etat: false}
+		];
+
+		$scope.ajouterTache = function(){
+			$scope.listeTaches.push({
+				titre : $scope.tacheAAjouter,
+				etat: false
+			});
+
+			$scope.tacheAAjouter = "";
+		}
+
+		$scope.countRemainingTask = function(){
+			// on crée un nouveau tableau grâce au filter (ne contenant que les éléments qui ne sont pas cochés) et on récupère sa taille (pour avoir le nombre de tâches restantes)
+			return $scope.listeTaches.filter(function(element){
+				return !element.etat;
+			}).length;
+		}
+
+		$scope.removeDone = function(){
+			// on crée un nouveau tableau grâce au filter (ne contenant que les éléments qui ne sont pas cochés)
+			// on remplace listeTaches par ce nouveau tableau
+			$scope.listeTaches = $scope.listeTaches.filter(function(element){
+				return !element.etat;
+			});
+		}
+	})
+
+
+	</script>
+</body>
+</html>
